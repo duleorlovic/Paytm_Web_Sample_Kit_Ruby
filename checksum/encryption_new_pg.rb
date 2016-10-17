@@ -157,6 +157,21 @@ module EncryptionNewPG
   end
 
 
+  def new_pg_checksum_by_str(paramstr, key, salt_length = 4)
+    
+    salt = new_pg_generate_salt(salt_length)
+    
+    str = nil
+    
+    str = paramstr + '|' + salt
+    check_sum = Digest::SHA256.hexdigest(str)
+    check_sum = check_sum + salt 
+    ### encrypting checksum ###
+    check_sum = new_pg_encrypt_variable(check_sum, key)
+    return check_sum
+  end
+  
+  
   ### function returns checksum of given key value pairs (must contain the :checksum key) ###
   ### accepts a hash with key value pairs ###
   ### calculates sha256 checksum of given values ###
