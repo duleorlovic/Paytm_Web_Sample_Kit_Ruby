@@ -156,6 +156,44 @@ module EncryptionNewPG
     return check_sum
   end
 
+  ### function returns checksum of given key value pairs ###
+  ### accepts a hash with key value pairs ###
+  ### calculates sha256 checksum of given values ###
+  def new_pg_refund_checksum(paytmparams, key, salt_length = 4)
+    keys = paytmparams.keys
+    keys.each do |k|
+      if ! paytmparams[k].empty?
+        #if params[k].to_s.include? "REFUND"
+        unless paytmparams[k].to_s.include? "|"
+            next
+        end
+        paytmparams[k] = paytmparams[k]
+      end
+    end
+    if paytmparams.class != Hash
+      return false
+    end
+    if key.empty?
+      return false
+    end
+    salt = new_pg_generate_salt(salt_length)
+    keys = paytmparams.keys
+    str = nil
+    keys = keys.sort
+    keys.each do |k|
+      if str.nil?
+        str = paytmparams[k].to_s
+        next
+      end
+      str = str + '|'  + paytmparams[k].to_s
+    end
+    str = str + '|' + salt
+    check_sum = Digest::SHA256.hexdigest(str)
+    check_sum = check_sum + salt
+    ### encrypting checksum ###
+    check_sum = new_pg_encrypt_variable(check_sum, key)
+    return check_sum
+  end
 
   ### function returns checksum of given key value pairs (must contain the :checksum key) ###
   ### accepts a hash with key value pairs ###
