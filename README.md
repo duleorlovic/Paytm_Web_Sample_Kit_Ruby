@@ -29,3 +29,11 @@ new_pg_verify_checksum(paytmparams, check_sum, merchant_key) where,
 - 'paytmparams': is a parameter array which was created in step 1 of this section (NOTE: Do not include the CHECKSUMHASH parameter)
 - 'check_sum' : Is the CHECKSUMHASH parameter as received in step 2.
 - 'merchant_key': Is the merchant key received from Paytm
+
+# To generate refund checksum in Ruby :
+1. Create an associative array with key value pair of following paytm parameters 
+(MID, ORDERID, TXNTYPE, REFUNDAMOUNT, TXNID, REFID)
+2. To generate checksum, call the following method. This function returns the checksum as a string.
+new_pg_refund_checksum(paytmparams, merchant key).gsub("\n",'') where,
+ - 'paytmparams' is an associative array containing Paytm parameters.
+ - 'merchant key' is the Paytm Merchant Key provided by Paytm.
