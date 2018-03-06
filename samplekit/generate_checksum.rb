@@ -33,10 +33,10 @@ paramList["WEBSITE"] = WEBSITE
 checksum_hash = new_pg_checksum(paramList, PAYTM_MERCHANT_KEY).gsub("\n",'')
 
 #staging Url
-payment_url = "https://pguat.paytm.com/oltp-web/processTransaction";
+payment_url = "https://securegw-stage.paytm.in/theia/processTransaction";
 
 #live Url 
-#payment_url = "https://secure.paytm.in/oltp-web/processTransaction";
+#payment_url = "https://securegw.paytm.in/theia/processTransaction";
 
 puts "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html;charset=ISO-8859-I\"><title>Paytm</title></head><body><center><h2>Redirecting to Paytm </h2><br /><h1>Please do not refresh this page...</h1></center><form method=\"post\" action=\"#{payment_url}\" name=\"f1\">"
 keys = paramList.keys
