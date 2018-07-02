@@ -11,6 +11,8 @@ WEBSITE = ""
 MID = ""
 INDUSTRY_TYPE_ID = ""
 CHANNEL_ID = ""
+# use your server url instead of localhost
+CALLBACK_URL = 'http://localhost:3000'
 
 paramList = Hash.new
 
@@ -29,6 +31,7 @@ paramList["TXN_AMOUNT"] = TXN_AMOUNT
 paramList["MSISDN"] = MOBILE_NO
 paramList["EMAIL"] = EMAIL
 paramList["WEBSITE"] = WEBSITE
+paramList['CALLBACK_URL'] = CALLBACK_URL
 
 checksum_hash = new_pg_checksum(paramList, PAYTM_MERCHANT_KEY).gsub("\n",'')
 
